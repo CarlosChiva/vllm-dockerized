@@ -1,0 +1,22 @@
+[project]
+name = "glm-vllm-server"
+version = "0.1.0"
+description = "vLLM server for GLM-4.7-Flash"
+readme = ""
+requires-python = ">=3.12"
+dependencies = [
+    "vllm>=0.7.0.dev0",
+]
+
+[project.optional-dependencies]
+dev = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

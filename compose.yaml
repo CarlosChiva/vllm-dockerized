@@ -1,0 +1,30 @@
+services:
+  vllm:
+    build: .
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - HF_HOME=/models          # huggingface descarga aquí
+      - HUGGING_FACE_HUB_TOKEN=${HF_TOKEN:-}
+    volumes:
+      - model-cache:/models      # persistente entre reinicios
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: '16gb'             # necesario para operaciones de memoria compartida
+
+volumes:
+  model-cache:
+    driver: local                # Docker gestiona el volumen
+    # Si prefieres una ruta concreta en el host, usa en su lugar:
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /mnt/models      # ← tu ruta en el host
