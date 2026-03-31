@@ -20,7 +20,7 @@ source .venv/bin/activate
 #      --port 8000
 
 vllm serve QuantTrio/Qwen3.5-27B-AWQ \
-     --max-model-len 81920 \
+     --max-model-len 90920 \
      --max-num-seq 6 \
      --gpu-memory-utilization 0.94 \
      --kv-cache-dtype fp8 \
