@@ -2,7 +2,7 @@
 # STAGE 1: Sistema base + uv
 # Cambia solo si actualizas Ubuntu o CUDA
 # ============================================================
-FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04 AS base
+FROM nvidia/cuda:13.0.0-cudnn-devel-ubuntu24.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
