@@ -8,8 +8,8 @@ source .venv/bin/activate
 vllm serve QuantTrio/GLM-4.7-Flash-AWQ \
      --quantization awq_marlin \
      --dtype float16 \
-     --max-model-len 80768 \
-     --max-num-seq 6 \
+     --max-model-len 100768 \
+     --max-num-seq 8 \
      --gpu-memory-utilization 0.90 \
      --tool-call-parser glm47 \
      --reasoning-parser glm45 \
