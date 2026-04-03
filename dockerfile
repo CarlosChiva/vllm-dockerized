@@ -49,7 +49,7 @@ RUN /app/.venv/bin/pip install -U vllm --pre \
     && /app/.venv/bin/pip install git+https://github.com/huggingface/transformers.git
 # ============================================================
 # STAGE 4: Imagen final
-# Cambia cada vez que tocas serve.sh
+# Cambia cada vez que modifiques el comando vLLM
 # ============================================================
 FROM base AS runtime
 
@@ -59,10 +59,19 @@ COPY --from=venv /app/.venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 ENV VIRTUAL_ENV="/app/.venv"
 
-COPY serve.sh .
-RUN chmod +x serve.sh
-
 VOLUME ["/models"]
 EXPOSE 8000
 
-CMD ["./serve.sh"]
+CMD ["vllm", "serve", "QuantTrio/Qwen3.5-27B-AWQ", \
+     "--max-model-len", "90920", \
+     "--max-num-seq", "6", \
+     "--gpu-memory-utilization", "0.94", \
+     "--kv-cache-dtype", "fp8", \
+     "--enable-chunked-prefill", \
+     "--reasoning-parser", "qwen3", \
+     "--trust-remote-code", \
+     "--enable-auto-tool-choice", \
+     "--tool-call-parser", "qwen3_coder", \
+     "--served-model-name", "qwen3.5", \
+     "--host", "0.0.0.0", \
+     "--port", "8000"]
